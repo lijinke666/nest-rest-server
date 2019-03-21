@@ -31,7 +31,7 @@ export class UserController {
   }
 
   @Put(':id')
-  async updateOneById(@Body() createUserDto: CreateCatDto) {
-    return await this.userService.updateOneById(createUserDto);
+  async updateOneById(@Param() param, @Body() createUserDto: CreateCatDto) {
+    return await this.userService.updateOneById(param.id, createUserDto);
   }
 }

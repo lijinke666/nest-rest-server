@@ -23,6 +23,10 @@ export class UserService {
     return await this.userRepository.delete(id);
   }
 
+  async updateOneById(id: string, createUserDto: CreateCatDto) {
+    return await this.userRepository.update(id, createUserDto);
+  }
+
   async create(createUserDto: CreateCatDto) {
     return await this.userRepository.create(createUserDto);
   }
