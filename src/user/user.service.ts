@@ -19,6 +19,10 @@ export class UserService {
     return await this.userRepository.findOne(id);
   }
 
+  async deleteOneById(id: string) {
+    return await this.userRepository.delete(id);
+  }
+
   async create(createUserDto: CreateCatDto) {
     return await this.userRepository.create(createUserDto);
   }
