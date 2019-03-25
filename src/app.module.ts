@@ -7,6 +7,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import * as redisStore from 'cache-manager-redis-store';
 import { ConfigModule } from './config/config.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule } from './config/config.module';
     //   host: 'localhost',
     //   port: 6379
     // }),
+    AuthModule,
     ConfigModule,
     TypeOrmModule.forRoot(),
     UserModule,

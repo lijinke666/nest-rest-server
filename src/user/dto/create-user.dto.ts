@@ -1,6 +1,7 @@
-import {IsNotEmpty, MaxLength, IsNumber, Length } from 'class-validator';
+import { IsNotEmpty, MaxLength, IsNumber, Length } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 export class CreateCatDto {
+  
   @IsNotEmpty()
   @Length(2, 6)
   @ApiModelProperty({

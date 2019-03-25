@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Delete, Put  } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Delete, Put, UseGuards  } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateCatDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -10,6 +11,7 @@ export class UserController {
   ) { }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
   }
