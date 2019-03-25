@@ -17,8 +17,8 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOneById(@Param() param): Promise<User> {
-    return await this.userService.findOnyById(param.id);
+  async findOneById(@Param('id') id: string): Promise<User> {
+    return await this.userService.findOnyById(id);
   }
 
   @Post()
@@ -28,12 +28,12 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deleteOneById(@Param() param) {
-    return await this.userService.deleteOneById(param.id);
+  async remove(@Param('id') id: string) {
+    return await this.userService.deleteOneById(id);
   }
 
   @Put(':id')
-  async updateOneById(@Param() param, @Body() createUserDto: CreateCatDto) {
-    return await this.userService.updateOneById(param.id, createUserDto);
+  async update(@Param('id') id: string, @Body() createUserDto: CreateCatDto) {
+    return await this.userService.updateOneById(id, createUserDto);
   }
 }

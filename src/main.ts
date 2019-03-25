@@ -29,9 +29,6 @@ import * as csurf from 'csurf';
     }),
   );
 
-  // 全局参数验证
-  app.useGlobalPipes(new ValidationPipe());
-
   // Header 头 安全
   app.use(helmet());
 
@@ -48,6 +45,9 @@ import * as csurf from 'csurf';
 
   // Swagger
   registerSwagger(app)();
+
+  // 全局参数验证
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 })();
