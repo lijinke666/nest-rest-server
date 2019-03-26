@@ -24,14 +24,6 @@ import { LoginUserCatDto } from './dto/login-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/login')
-  @HttpCode(HttpStatus.OK)
-  // @UseGuards(JwtAuthGuard)
-  @ApiOperation({ title: '获取用户列表' })
-  async login(@Body() userInfo: LoginUserCatDto) {
-    return await this.userService.login(userInfo);
-  }
-
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '获取用户列表' })
@@ -40,6 +32,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '获取单个用户' })
   async findOneById(@Param('id') id: string): Promise<User> {
     return await this.userService.findOnyById(id);
@@ -50,6 +43,7 @@ export class UserController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ title: '创建用户' })
   async create(@Body() createUserDto: CreateUserDto) {
@@ -58,12 +52,14 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '删除' })
   async remove(@Param('id') id: string) {
     return await this.userService.deleteOneById(id);
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '修改用户' })
   async update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
     return await this.userService.updateOneById(id, createUserDto);

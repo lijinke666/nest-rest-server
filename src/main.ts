@@ -6,7 +6,6 @@ import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
-import * as csurf from 'csurf';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { AllExceptionsFilter } from './filters/all-exception.filter';
 
@@ -33,9 +32,6 @@ import { AllExceptionsFilter } from './filters/all-exception.filter';
 
   // Header 头 安全
   app.use(helmet());
-
-  // 跨站请求伪造
-  // app.use(csurf());
 
   // 接口访问限制
   app.use(

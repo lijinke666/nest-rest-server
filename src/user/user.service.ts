@@ -13,17 +13,6 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async login(userInfo: LoginUserCatDto) {
-    const user = await this.userRepository.findOne({
-      ...userInfo,
-      password: this.getPassWord(userInfo.password)
-    });
-    if(!user){
-      throw new BadRequestException('用户名或密码错误!')
-    }
-    return user
-  }
-
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
@@ -32,8 +21,11 @@ export class UserService {
     return await this.userRepository.findOne(id);
   }
 
-  async findOne(user: Partial<User>): Promise<User> {
-    return await this.userRepository.findOne(user);
+  async findOne(userInfo: Partial<User>): Promise<User> {
+    return await this.userRepository.findOne({
+      ...userInfo,
+      password: this.getPassWord(userInfo.password)
+    });
   }
 
   async deleteOneById(id: string) {
