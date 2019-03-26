@@ -16,6 +16,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
+import { LoginUserCatDto } from './dto/login-user.dto';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
@@ -23,8 +24,16 @@ import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Post('/login')
+  @HttpCode(HttpStatus.OK)
   // @UseGuards(JwtAuthGuard)
+  @ApiOperation({ title: '获取用户列表' })
+  async login(@Body() userInfo: LoginUserCatDto) {
+    return await this.userService.login(userInfo);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '获取用户列表' })
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();

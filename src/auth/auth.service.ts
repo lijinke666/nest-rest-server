@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtPayload, JwtResponse } from './interfaces/jwt.interface';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/user.entity';
+import { LoginUserCatDto } from 'src/user/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async signIn(user: JwtPayload): Promise<JwtResponse> {
+  async signIn(user: LoginUserCatDto): Promise<JwtResponse> {
     const token = this.jwtService.sign(user);
     return {
       expiresIn: 3600,

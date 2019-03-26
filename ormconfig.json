@@ -6,5 +6,6 @@
   "password": "123456",
   "database": "test",
   "entities": ["src/**/*.entity{.ts,.js}"],
-  "synchronize": true
+  "synchronize": true,
+  "logging": ["error"]
 }

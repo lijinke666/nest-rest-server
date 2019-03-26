@@ -23,7 +23,7 @@ export class CreateUserDto {
   @ApiModelProperty({
     description: '手机号',
     required: false,
-    type: Number,
+    type: String,
   })
-  readonly phone?: number;
+  readonly phone?: string;
 }

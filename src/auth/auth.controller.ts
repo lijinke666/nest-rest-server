@@ -13,13 +13,13 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  // @Get('login')
+  @Get('login')
   // @UseGuards(AuthGuard())
-  // @ApiOperation({title: '登录'})
-  // async login(@Body() loginUserDto: LoginUserCatDto): Promise<any> {
-  //   const user = await this.userService.findOne(loginUserDto);
-  //   if (user) {
-  //     return await this.authService.signIn(user);
-  //   }
-  // }
+  @ApiOperation({title: '登录'})
+  async login(@Body() loginUserDto: LoginUserCatDto): Promise<any> {
+    const user = await this.userService.findOne(loginUserDto);
+    if (user) {
+      return await this.authService.signIn(user);
+    }
+  }
 }

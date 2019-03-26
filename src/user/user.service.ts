@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as crypto from 'crypto';
+import { LoginUserCatDto } from './dto/login-user.dto';
 
 @Injectable()
 export class UserService {
@@ -11,6 +12,17 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
+
+  async login(userInfo: LoginUserCatDto) {
+    const user = await this.userRepository.findOne({
+      ...userInfo,
+      password: this.getPassWord(userInfo.password)
+    });
+    if(!user){
+      throw new BadRequestException('用户名或密码错误!')
+    }
+    return user
+  }
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
@@ -30,19 +42,26 @@ export class UserService {
 
   async updateOneById(id: string, createUserDto: CreateUserDto) {
     const user = await this.userRepository.findOne(id);
-    this.userRepository.merge(user, createUserDto);
+    this.userRepository.merge(user, {
+      ...createUserDto,
+      password: this.getPassWord(createUserDto.password)
+    });
     return await this.userRepository.save(user);
   }
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.create(createUserDto);
-    const password = crypto
-      .createHash('md5')
-      .update(createUserDto.password)
-      .digest('hex');
+    const password = this.getPassWord(createUserDto.password)
     return await this.userRepository.save({
       ...user,
       password,
     });
+  }
+
+  private getPassWord(password: string) {
+    return crypto
+      .createHash('md5')
+      .update(password)
+      .digest('hex');
   }
 }
