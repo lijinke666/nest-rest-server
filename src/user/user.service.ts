@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as crypto from 'crypto';
-import { LoginUserCatDto } from './dto/login-user.dto';
 
 @Injectable()
 export class UserService {
@@ -24,26 +23,29 @@ export class UserService {
   async findOne(userInfo: Partial<User>): Promise<User> {
     return await this.userRepository.findOne({
       ...userInfo,
-      password: this.getPassWord(userInfo.password)
+      password: this.getPassWord(userInfo.password),
     });
   }
 
   async deleteOneById(id: string) {
-    return await this.userRepository.delete(id);
+    await this.userRepository.delete(id);
   }
 
   async updateOneById(id: string, createUserDto: CreateUserDto) {
     const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new BadRequestException('用户不存在!');
+    }
     this.userRepository.merge(user, {
       ...createUserDto,
-      password: this.getPassWord(createUserDto.password)
+      password: this.getPassWord(createUserDto.password),
     });
-    return await this.userRepository.save(user);
+    await this.userRepository.save(user);
   }
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.create(createUserDto);
-    const password = this.getPassWord(createUserDto.password)
+    const password = this.getPassWord(createUserDto.password);
     return await this.userRepository.save({
       ...user,
       password,

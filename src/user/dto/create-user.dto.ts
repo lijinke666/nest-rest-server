@@ -19,6 +19,7 @@ export class CreateUserDto {
   })
   readonly password: string;
 
+  @IsNotEmpty()
   @Length(11)
   @ApiModelProperty({
     description: '手机号',

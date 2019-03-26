@@ -9,14 +9,12 @@ import {
   Delete,
   Put,
   UseGuards,
-  UseFilters,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
-import { LoginUserCatDto } from './dto/login-user.dto';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
@@ -47,7 +45,6 @@ export class UserController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ title: '创建用户' })
   async create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return await this.userService.create(createUserDto);
   }
 
