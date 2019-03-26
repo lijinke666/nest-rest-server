@@ -1,7 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 import { HttpException } from '@nestjs/common';
 
-// 捕获程序 所有的异常 统一发送给前端
+// 捕获程序 所有的http异常 统一发送给前端
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
@@ -10,12 +10,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest();
     const statusCode = exception.getStatus();
 
-    response
-      .status(statusCode)
-      .json({
-        statusCode,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      });
+    response.status(statusCode).json({
+      statusCode,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+    });
   }
 }

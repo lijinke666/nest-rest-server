@@ -18,19 +18,19 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@nestjs/common@^6.0.0":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-6.0.1.tgz#fe6758c2643c98aa7f295844f9cf7863f5de3342"
-  integrity sha512-+43nUxG9YSF2SnnFFT91/yTbvyfrGWI3a3cTI8jlSQUXOeKQILQhOXlA3N2GgDwYYH8GX8Xy8FXZ4GopJ7lT6A==
+"@nestjs/common@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-6.0.2.tgz#7776360b52807485681aa5ee727215a35f8515eb"
+  integrity sha512-bPZl4zfv9tk0PbRdn9RftsdUftAEV47brcpXg/e9rGQiZNGeSSc7y0T1pQJFN3HO4Lxx8HdvC2f0ebswc90vaQ==
   dependencies:
     axios "0.18.0"
     cli-color "1.4.0"
     uuid "3.3.2"
 
-"@nestjs/core@^6.0.0":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-6.0.1.tgz#7f2455a6258edff812f8ea643cdd589f033d1df7"
-  integrity sha512-1TbB19AE6opDPLoALaJO/ZZHCofKi8pJDJNInlPjRBIeP+Vfrh6LyCl7xw/RjXkrfZZIrMy+SVp0+qxlAZ7HnQ==
+"@nestjs/core@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-6.0.2.tgz#a5103ac48a2e10581928ce4af82260b06e6fb597"
+  integrity sha512-kNBiVrMdv9+hf+lOkPP2UgiKXAb0/2l3zgzSTP3vdnlV5YhCVEveW4ZVo8U1vIpLzZtzXn8ZzETupicBzLocTA==
   dependencies:
     "@nuxtjs/opencollective" "0.2.1"
     fast-safe-stringify "2.0.6"
@@ -53,9 +53,9 @@
   integrity sha512-+82YJTQpmDrcqS65Jgtdv6+n5lWCZtANw7Cy3KWdSKPBbNheIYBWtKMV2uXZXXtVqxgGaCnrJ03XpHc22RX4xA==
 
 "@nestjs/platform-express@^6.0.0":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.0.1.tgz#cffd3c84d3b2c1686a13e8ca74faee4fabea4826"
-  integrity sha512-KFxK4t2eL0fZ3NpzTEJeWmiDkGwCAfPACadNCmjNGeXrkxK1Z2VJvfJeA2DDmYCNH3Ps8Ro25LO+a0oVYgdqoQ==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.0.2.tgz#35810b3f59f1ac517102efd8c62a485072cad026"
+  integrity sha512-Y+Cc4q8uSSAEfrxawzADCaeqr/F9Ilbunbruha87cJyrM/f9H/P8vq1ueNRV5fgx5IYzziS8vbwWowo4qOYgGA==
   dependencies:
     body-parser "1.18.3"
     cors "2.8.5"
@@ -72,9 +72,9 @@
     swagger-ui-express "4.0.2"
 
 "@nestjs/testing@^6.0.0":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.0.1.tgz#617ceeef8f9c7b19fe261e2e89e154e9c119f3d7"
-  integrity sha512-+sB913Rrxwa6p7YZhExQEV7NiF/Qly6a9FlVlpoWkZnI0ktIzjbdZqo910JFYSawBdeplfHjWtt2Z6LSX6Mfng==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-6.0.2.tgz#4bea74d3e16f24e4ddfcf7e4e087f57ab8f71e5f"
+  integrity sha512-tAdhib/lJn4caK3fzBvyf40oK3p9thkkCcBaF0Zd2sPOTI8tqVNYtdNwEF1pq6u3D6beLDSttyIIbM0yXA52FQ==
   dependencies:
     optional "0.1.4"
 

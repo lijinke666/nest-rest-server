@@ -1,39 +1,62 @@
-import { Controller, Get, Param, Post, Body, HttpCode, HttpStatus, Delete, Put, UseGuards  } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Delete,
+  Put,
+  UseGuards,
+  UseFilters,
+} from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
-import { CreateCatDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiUseTags('用户管理')
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-  ) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
+  @ApiOperation({ title: '获取用户列表' })
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ title: '获取单个用户' })
   async findOneById(@Param('id') id: string): Promise<User> {
     return await this.userService.findOnyById(id);
   }
 
+  async findOne(@Param() param: User): Promise<User> {
+    return await this.userService.findOne(param);
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createUserDto: CreateCatDto) {
+  @ApiOperation({ title: '创建用户' })
+  async create(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto);
     return await this.userService.create(createUserDto);
   }
 
   @Delete(':id')
+  @ApiOperation({ title: '删除' })
   async remove(@Param('id') id: string) {
     return await this.userService.deleteOneById(id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() createUserDto: CreateCatDto) {
+  @ApiOperation({ title: '修改用户' })
+  async update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
     return await this.userService.updateOneById(id, createUserDto);
   }
 }

@@ -1,6 +1,6 @@
 import { IsNotEmpty, Length } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
-export class CreateUserDto {
+export class LoginUserCatDto {
   @IsNotEmpty()
   @Length(2, 6)
   @ApiModelProperty({
@@ -18,12 +18,4 @@ export class CreateUserDto {
     type: String,
   })
   readonly password: string;
-
-  @Length(11)
-  @ApiModelProperty({
-    description: '手机号',
-    required: false,
-    type: Number,
-  })
-  readonly phone?: number;
 }
