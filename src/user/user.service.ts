@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as crypto from 'crypto';
+import crypto from 'src/helper/crypto';
 
 @Injectable()
 export class UserService {
@@ -23,7 +23,7 @@ export class UserService {
   async findOne(userInfo: Partial<User>): Promise<User> {
     return await this.userRepository.findOne({
       ...userInfo,
-      password: this.getPassWord(userInfo.password),
+      password: crypto.getPassWord(userInfo.password),
     });
   }
 
@@ -38,24 +38,17 @@ export class UserService {
     }
     this.userRepository.merge(user, {
       ...createUserDto,
-      password: this.getPassWord(createUserDto.password),
+      password: crypto.getPassWord(createUserDto.password),
     });
     await this.userRepository.save(user);
   }
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.create(createUserDto);
-    const password = this.getPassWord(createUserDto.password);
+    const password = crypto.getPassWord(createUserDto.password);
     return await this.userRepository.save({
       ...user,
       password,
     });
-  }
-
-  private getPassWord(password: string) {
-    return crypto
-      .createHash('md5')
-      .update(password)
-      .digest('hex');
   }
 }

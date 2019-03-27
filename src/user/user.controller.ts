@@ -9,12 +9,17 @@ import {
   Delete,
   Put,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { writeFileSync } from 'fs';
+import { join } from 'path';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
@@ -60,5 +65,12 @@ export class UserController {
   @ApiOperation({ title: '修改用户' })
   async update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
     return await this.userService.updateOneById(id, createUserDto);
+  }
+
+  @Post('avatarUpload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file) {
+    const filePath = join(__dirname, file.originalname.replace(/(.*)\.(jpeg|png|jpg)/,`${Date.now()}.$2`))
+    writeFileSync(filePath, file.buffer)
   }
 }

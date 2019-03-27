@@ -8,12 +8,17 @@ import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { AllExceptionsFilter } from './filters/all-exception.filter';
+import { MyLogger } from './helper/logger';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 (async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
-    logger: false,
+    logger: new MyLogger(),
   });
+
+  app.useStaticAssets(join(__dirname, '..', 'public'))
 
   // Cookie
   app.use(cookieParser());

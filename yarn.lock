@@ -52,10 +52,10 @@
   resolved "https://registry.yarnpkg.com/@nestjs/passport/-/passport-6.0.0.tgz#b92fdf90e055eece02c0378fce98e6f60a864c54"
   integrity sha512-+82YJTQpmDrcqS65Jgtdv6+n5lWCZtANw7Cy3KWdSKPBbNheIYBWtKMV2uXZXXtVqxgGaCnrJ03XpHc22RX4xA==
 
-"@nestjs/platform-express@^6.0.0":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.0.2.tgz#35810b3f59f1ac517102efd8c62a485072cad026"
-  integrity sha512-Y+Cc4q8uSSAEfrxawzADCaeqr/F9Ilbunbruha87cJyrM/f9H/P8vq1ueNRV5fgx5IYzziS8vbwWowo4qOYgGA==
+"@nestjs/platform-express@^6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-6.0.3.tgz#231cb79feb1f3d672185c37582ca55ac57cae2d0"
+  integrity sha512-vegvUUtsV6e8w6FQS46ziD4tGLwFU895QSNjTqUJ7Z7i2Iif3ZEKUQpkmxGEux8eVeidLKvwOA7Qum0G+JCMaA==
   dependencies:
     body-parser "1.18.3"
     cors "2.8.5"
