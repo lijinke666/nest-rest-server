@@ -70,7 +70,10 @@ export class UserController {
   @Post('avatarUpload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file) {
-    const filePath = join(__dirname, file.originalname.replace(/(.*)\.(jpeg|png|jpg)/,`${Date.now()}.$2`))
-    writeFileSync(filePath, file.buffer)
+    const filePath = join(
+      __dirname,
+      file.originalname.replace(/(.*)\.(jpeg|png|jpg)/, `${Date.now()}.$2`),
+    );
+    writeFileSync(filePath, file.buffer);
   }
 }

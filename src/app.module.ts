@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, Module, CacheInterceptor } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,9 +13,10 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     // CacheModule.register({
     //   store: redisStore,
-    //   host: 'localhost',
+    //   host: process.env.REDIS_HOST || 'localhost',
     //   port: 6379
     // }),
+    CacheModule.register(),
     AuthModule,
     ConfigModule,
     TypeOrmModule.forRoot(),
@@ -27,6 +28,10 @@ import { AuthModule } from './auth/auth.module';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
     },
   ],
 })

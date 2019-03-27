@@ -8,17 +8,15 @@ import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { AllExceptionsFilter } from './filters/all-exception.filter';
-import { MyLogger } from './helper/logger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
 (async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
-    logger: new MyLogger(),
   });
 
-  app.useStaticAssets(join(__dirname, '..', 'public'))
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   // Cookie
   app.use(cookieParser());
@@ -51,8 +49,8 @@ import { join } from 'path';
 
   // 全局异常处理
   const { httpAdapter } = app.get(HttpAdapterHost);
-  // app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  app.useGlobalFilters(new HttpExceptionFilter());
+  // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
   // 全局参数验证
   app.useGlobalPipes(new ValidationPipe());
