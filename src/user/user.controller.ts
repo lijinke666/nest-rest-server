@@ -20,22 +20,25 @@ import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
+import { Roles } from 'src/roles/roles.decorator';
+import { RolesGuard } from 'src/roles/guards/roles.gurad';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
 @Controller('user')
+// @UseGuards(RolesGuard,JwtAuthGuard)
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @Roles('admin')
   @ApiOperation({ title: '获取用户列表' })
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '获取单个用户' })
   async findOneById(@Param('id') id: string): Promise<User> {
     return await this.userService.findOnyById(id);
@@ -46,7 +49,6 @@ export class UserController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ title: '创建用户' })
   async create(@Body() createUserDto: CreateUserDto) {
@@ -54,14 +56,12 @@ export class UserController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '删除' })
   async remove(@Param('id') id: string) {
     return await this.userService.deleteOneById(id);
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ title: '修改用户' })
   async update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
     return await this.userService.updateOneById(id, createUserDto);
