@@ -1,13 +1,12 @@
 import { NestFactory, HttpAdapterHost } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { registerSwagger } from './swagger';
+import { registerSwagger } from './common/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
-import { AllExceptionsFilter } from './filters/all-exception.filter';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 

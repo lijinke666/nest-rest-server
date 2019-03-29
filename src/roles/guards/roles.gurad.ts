@@ -1,19 +1,25 @@
 import { Injectable, CanActivate, ExecutionContext, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) { }
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly userService: UserService
+  ) { }
 
-  canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log(roles)
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    // controller 级别的权限 getClass router 级别的权限 getHandler
+    const roles = this.reflector.get<string[]>('roles', context.getClass());
     if (!roles) {
       return true;
     }
-    const { user } = context.switchToHttp().getRequest();
-    console.log(user)
-    const hasRole = () => user.roles.some((role) => roles.includes(role));
-    return user && user.roles && hasRole();
+    const req = context.switchToHttp().getRequest();
+    const userId = req.session.userId
+    // @ts-ignore
+    const user = await this.userService.findOnyById(userId)
+    const hasRole = () => roles.includes(user.role)
+    return user && user.role && hasRole();
   }
 }

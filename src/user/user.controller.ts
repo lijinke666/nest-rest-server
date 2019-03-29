@@ -22,17 +22,18 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { Roles } from 'src/roles/roles.decorator';
 import { RolesGuard } from 'src/roles/guards/roles.gurad';
+import { ROLES } from 'src/roles/constants/roles.constants';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
 @Controller('user')
-// @UseGuards(RolesGuard,JwtAuthGuard)
+@UseGuards(RolesGuard,JwtAuthGuard)
 @UseGuards(RolesGuard)
+@Roles(ROLES.ADMIN)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @Roles('admin')
   @ApiOperation({ title: '获取用户列表' })
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
