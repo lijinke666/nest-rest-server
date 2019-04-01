@@ -24,6 +24,7 @@ import { join } from 'path';
 import { Roles } from 'src/roles/roles.decorator';
 import { RolesGuard } from 'src/roles/guards/roles.gurad';
 import { ROLES } from 'src/roles/constants/roles.constants';
+import { IPaginationResponse } from 'src/typing/base';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')

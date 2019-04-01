@@ -1,4 +1,4 @@
-declare interface IPaginationResponse<T = {}> {
+export interface IPaginationResponse<T = {}> {
   resource: T,
   total?: number
 }

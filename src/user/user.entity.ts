@@ -18,7 +18,8 @@ export class User {
 
   @Column('enum', {
     default: ROLES_CONSTANTS.USER,
-    enum: [ROLES_CONSTANTS.ADMIN, ROLES_CONSTANTS.USER] 
+    enum: [ROLES_CONSTANTS.ADMIN, ROLES_CONSTANTS.USER],
+    select: false,
   })
   role: ROLES;
 }

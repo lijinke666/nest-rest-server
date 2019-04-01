@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import crypto from '../common/helper/crypto';
+import { IPaginationResponse } from 'src/typing/base';
 
 @Injectable()
 export class UserService {
