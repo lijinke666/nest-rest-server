@@ -12,8 +12,17 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  async findAll(pageIndex, pageSize): Promise<IPaginationResponse<User[]>> {
+    const [resource, total] = await this.userRepository
+    .createQueryBuilder()
+    .skip((pageIndex - 1) * pageSize)
+    .take(pageSize)
+    .getManyAndCount()
+
+    return {
+      total,
+      resource
+    }
   }
 
   async findOnyById(id: string): Promise<User> {

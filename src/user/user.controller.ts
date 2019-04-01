@@ -11,6 +11,7 @@ import {
   UseGuards,
   UploadedFile,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -28,15 +29,15 @@ import { ROLES } from 'src/roles/constants/roles.constants';
 @ApiUseTags('用户管理')
 @Controller('user')
 // @UseGuards(RolesGuard,JwtAuthGuard)
-@UseGuards(RolesGuard)
+// @UseGuards(RolesGuard)
 @Roles(ROLES.ADMIN)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
   @ApiOperation({ title: '获取用户列表' })
-  async findAll(): Promise<User[]> {
-    return await this.userService.findAll();
+  async findAll(@Query() params = { pageIndex:1, pageSize: 10 }): Promise<IPaginationResponse<User[]>> {
+    return await this.userService.findAll(params.pageIndex, params.pageSize);
   }
 
   @Get(':id')
