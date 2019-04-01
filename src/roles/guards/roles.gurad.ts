@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext, Logger } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { UserService } from 'src/user/user.service';
 
@@ -19,6 +19,10 @@ export class RolesGuard implements CanActivate {
     const userId = req.session.userId
     const user = await this.userService.findOnyById(userId)
     const hasRole = () => roles.includes(user.role)
-    return user && user.role && hasRole();
+    if (user && user.role && hasRole()) {
+      return true
+    } else {
+      throw new ForbiddenException('没有权限!');
+    }
   }
 }

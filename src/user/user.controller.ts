@@ -27,7 +27,7 @@ import { ROLES } from 'src/roles/constants/roles.constants';
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
 @Controller('user')
-@UseGuards(RolesGuard,JwtAuthGuard)
+// @UseGuards(RolesGuard,JwtAuthGuard)
 @UseGuards(RolesGuard)
 @Roles(ROLES.ADMIN)
 export class UserController {
