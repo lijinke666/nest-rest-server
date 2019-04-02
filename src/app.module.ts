@@ -8,7 +8,6 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import * as redisStore from 'cache-manager-redis-store';
 import { ConfigModule } from './config/config.module';
 import { AuthModule } from './auth/auth.module';
-import { RolesGuard } from './roles/guards/roles.gurad';
 
 @Module({
   imports: [
@@ -18,7 +17,6 @@ import { RolesGuard } from './roles/guards/roles.gurad';
       port: 6379,
       ttl: 5,
     }),
-    // CacheModule.register(),
     AuthModule,
     ConfigModule,
     TypeOrmModule.forRoot(),

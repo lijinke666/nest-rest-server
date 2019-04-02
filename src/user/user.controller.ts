@@ -13,6 +13,7 @@ import {
   UseInterceptors,
   Query,
 } from '@nestjs/common';
+import { PaginationDto } from '../common/dto/pagination.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -30,14 +31,13 @@ import { IPaginationResponse } from 'src/typing/base';
 @ApiUseTags('用户管理')
 @Controller('user')
 // @UseGuards(RolesGuard,JwtAuthGuard)
-// @UseGuards(RolesGuard)
 @Roles(ROLES.ADMIN)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   @ApiOperation({ title: '获取用户列表' })
-  async findAll(@Query() params = { pageIndex:1, pageSize: 10 }): Promise<IPaginationResponse<User[]>> {
+  async findAll(@Query() params: PaginationDto = { pageIndex: 1, pageSize: 10 }): Promise<IPaginationResponse<User[]>> {
     return await this.userService.findAll(params.pageIndex, params.pageSize);
   }
 
