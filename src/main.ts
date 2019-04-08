@@ -9,7 +9,6 @@ import * as helmet from 'helmet';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 (async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {

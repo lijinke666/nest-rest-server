@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import crypto from '../common/helper/crypto';
+import crypto from '../common/utils/crypto';
 import { IPaginationResponse } from 'src/typing/base';
 
 @Injectable()
