@@ -1,4 +1,4 @@
-import { CacheModule, Module, CacheInterceptor } from '@nestjs/common';
+import { CacheModule, Module, CacheInterceptor, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +8,8 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import * as redisStore from 'cache-manager-redis-store';
 import { ConfigModule } from './config/config.module';
 import { AuthModule } from './auth/auth.module';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [
@@ -35,4 +37,11 @@ import { AuthModule } from './auth/auth.module';
     }
   ],
 })
-export class AppModule {}
+
+export class ApplicationModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes(UserController)
+  }
+}

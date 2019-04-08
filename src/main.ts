@@ -1,5 +1,5 @@
 import { NestFactory, HttpAdapterHost } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ApplicationModule } from './app.module';
 import { registerSwagger } from './common/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
@@ -9,9 +9,10 @@ import * as helmet from 'helmet';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 (async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {
     cors: true,
   });
 
