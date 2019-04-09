@@ -10,14 +10,19 @@ import { ConfigModule } from './config/config.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { UserController } from './user/user.controller';
+import { ConfigService } from './config/config.service';
 
 @Module({
   imports: [
-    CacheModule.register({
-      store: redisStore,
-      host: process.env.REDIS_HOST || 'localhost',
-      port: 6379,
-      ttl: 60,
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService)=> ({
+        store: redisStore,
+        ttl: configService.get('REDIS_TTL') as unknown as number,
+        host: configService.get('REDIS_HOST'),
+        port: configService.get('REDIS_PORT'),
+      }),
+      inject: [ConfigService]
     }),
     AuthModule,
     ConfigModule,
