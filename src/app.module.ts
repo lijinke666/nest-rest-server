@@ -1,4 +1,4 @@
-import { CacheModule, Module, CacheInterceptor, NestModule, MiddlewareConsumer, ValidationPipe } from '@nestjs/common';
+import { CacheModule, Module , NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +8,12 @@ import { ConfigModule } from './config/config.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { ConfigService } from './config/config.service';
+import { ArticleModule } from './article/article.module';
+
+const CoreModules = [
+  UserModule,
+  ArticleModule,
+]
 
 @Module({
   imports: [
@@ -24,7 +30,7 @@ import { ConfigService } from './config/config.service';
     AuthModule,
     ConfigModule,
     TypeOrmModule.forRoot(),
-    UserModule,
+    ...CoreModules,
   ],
   controllers: [AppController],
   providers: [

@@ -7,13 +7,13 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column({ type: 'varchar', length: 50 })
   username: string;
 
-  @Column({ length: 50 })
+  @Column({ type: 'varchar', length: 50, select: false })
   password: string;
 
-  @Column({ length: 11 })
+  @Column({ type: 'varchar', length: 11 })
   phone: string;
 
   @Column('enum', {
