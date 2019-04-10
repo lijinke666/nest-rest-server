@@ -1,8 +1,9 @@
-import { NestFactory, HttpAdapterHost } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
 import { registerSwagger } from './common/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import * as session from 'express-session';
+import * as connectRedis from 'connect-redis';
+import * as expressSession from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
@@ -15,22 +16,42 @@ import { join } from 'path';
     cors: true,
   });
 
-  app.useStaticAssets(join(__dirname, '..', 'public'));
+  const RedisStore = connectRedis(expressSession)
 
-  // Cookie
-  app.use(cookieParser());
+  // 全局参数验证
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    skipMissingProperties: false,
+    forbidUnknownValues: true,
+  }));
+
+  // // 全局异常处理
+  // app.useGlobalFilters(new HttpExceptionFilter());
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   // Session
   app.use(
-    session({
+    expressSession({
       secret: 'nest',
       name: 'nest',
+      store: new RedisStore({
+        host: 'localhost',
+        port: 6379,
+        ttl: 60,
+        logErrors: true,
+      }),
       cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 设置 cookie 7天后过期
-      resave: true,
+      resave: false,
       rolling: true,
       saveUninitialized: false,
     }),
   );
+
+  // Cookie
+  app.use(cookieParser());
 
   // Header 头 安全
   app.use(helmet());
@@ -45,14 +66,6 @@ import { join } from 'path';
 
   // Swagger
   registerSwagger(app)();
-
-  // 全局异常处理
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new HttpExceptionFilter());
-  // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
-
-  // 全局参数验证
-  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 })();
