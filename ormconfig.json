@@ -7,5 +7,5 @@
   "database": "test",
   "entities": ["src/**/*.entity{.ts,.js}"],
   "synchronize": true,
-  "logging": ["error"]
+  "logging": true
 }

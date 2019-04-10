@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { ConfigService } from './config.service';
+import { join } from 'path'
 
 @Global()
 @Module({
@@ -7,7 +8,7 @@ import { ConfigService } from './config.service';
     {
       provide: ConfigService,
       useValue: new ConfigService(
-        `${__dirname}/${process.env.NODE_ENV || 'development'}.env`,
+        join(__dirname,`../config/${process.env.NODE_ENV || 'development'}.env`),
       ),
     },
   ],

@@ -23,10 +23,10 @@ import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiImplicitFile, ApiConsumes }
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
-import { Roles } from 'src/roles/roles.decorator';
-import { RolesGuard } from 'src/roles/guards/roles.gurad';
-import { ROLES } from 'src/roles/constants/roles.constants';
-import { IPaginationResponse } from 'src/typing/base';
+import { Roles } from '../roles/roles.decorator';
+import { RolesGuard } from '../roles/guards/roles.gurad';
+import { ROLES } from '../roles/constants/roles.constants';
+import { IPaginationResponse } from '../typing/base';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')

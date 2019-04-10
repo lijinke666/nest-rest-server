@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, OneToOne } from 'typeorm';
-import { ROLES } from 'src/roles/interfaces/roles.interfaces';
-import { ROLES as ROLES_CONSTANTS } from 'src/roles/constants/roles.constants';
-import { Article } from 'src/article/article.entity';
+import { ROLES } from '../roles/interfaces/roles.interfaces';
+import { ROLES as ROLES_CONSTANTS } from '../roles/constants/roles.constants';
+import { Article } from '../article/article.entity';
 
 @Entity()
 export class User {
