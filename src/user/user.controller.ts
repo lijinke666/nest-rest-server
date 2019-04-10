@@ -12,13 +12,14 @@ import {
   UploadedFile,
   UseInterceptors,
   Query,
+  CacheKey,
 } from '@nestjs/common';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ApiBearerAuth, ApiUseTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiImplicitFile, ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
@@ -36,6 +37,7 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get()
+  @CacheKey('userList')
   @ApiOperation({ title: '获取用户列表' })
   async findAll(@Query() params: PaginationDto = { pageIndex: 1, pageSize: 10 }): Promise<IPaginationResponse<User[]>> {
     return await this.userService.findAll(params.pageIndex, params.pageSize);
@@ -71,6 +73,9 @@ export class UserController {
   }
 
   @Post('avatarUpload')
+  @ApiOperation({ title: '头像上传' })
+  @ApiConsumes('multipart/form-data')
+  @ApiImplicitFile({ name: 'file', required: true, description: '头像文件流' })
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file) {
     const filePath = join(
