@@ -11,14 +11,15 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async findAll(pageIndex, pageSize): Promise<IPaginationResponse<User[]>> {
     const [resource, total] = await this.userRepository
-    .createQueryBuilder()
-    .skip((pageIndex - 1) * pageSize)
-    .take(pageSize)
-    .getManyAndCount()
+      .createQueryBuilder()  // user 是别名
+      .orderBy('id', 'ASC')
+      .skip((pageIndex - 1) * pageSize)
+      .take(pageSize)
+      .getManyAndCount()
 
     return {
       total,

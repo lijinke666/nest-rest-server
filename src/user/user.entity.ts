@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, OneToOne } from 'typeorm';
 import { ROLES } from 'src/roles/interfaces/roles.interfaces';
 import { ROLES as ROLES_CONSTANTS } from 'src/roles/constants/roles.constants';
+import { Article } from 'src/article/article.entity';
 
 @Entity()
 export class User {
@@ -21,4 +22,7 @@ export class User {
     enum: [ROLES_CONSTANTS.ADMIN, ROLES_CONSTANTS.USER],
   })
   role: ROLES;
+
+  @OneToMany(type => Article, article => article.user)
+  articles: Article;
 }
