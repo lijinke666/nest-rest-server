@@ -1,5 +1,5 @@
 node_modules
 .history
 .vscode
-yarn.error
+yarn-error.log
 dist

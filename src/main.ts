@@ -38,7 +38,9 @@ import { join } from 'path';
       secret: 'nest',
       name: 'nest',
       store: new RedisStore({
-        host: 'localhost',
+        // host: 'localhost',
+        // docker-compose 的 环境变量
+        host: 'rd',
         port: 6379,
         ttl: 60,
         logErrors: true,

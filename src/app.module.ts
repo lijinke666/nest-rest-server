@@ -13,6 +13,7 @@ import { ArticleModule } from './article/article.module';
 const CoreModules = [
   UserModule,
   ArticleModule,
+  AuthModule,
 ]
 
 @Module({
@@ -22,12 +23,12 @@ const CoreModules = [
       useFactory: async (configService: ConfigService)=> ({
         store: redisStore,
         ttl: configService.get('REDIS_TTL') as unknown as number,
-        host: configService.get('REDIS_HOST'),
+        // docker link => redis
+        host: 'rd' || configService.get('REDIS_HOST'),
         port: configService.get('REDIS_PORT'),
       }),
       inject: [ConfigService]
     }),
-    AuthModule,
     ConfigModule,
     TypeOrmModule.forRoot(),
     ...CoreModules,
