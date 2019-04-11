@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { ROLES } from '../roles/interfaces/roles.interfaces';
 import { ROLES as ROLES_CONSTANTS } from '../roles/constants/roles.constants';
 import { Article } from '../article/article.entity';

@@ -7,4 +7,4 @@ if (existsSync(config)) {
   log4js.configure(config);
 }
 
-export default log4js
+export default log4js;

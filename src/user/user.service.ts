@@ -11,20 +11,20 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async findAll(pageIndex, pageSize): Promise<IPaginationResponse<User[]>> {
     const [resource, total] = await this.userRepository
-      .createQueryBuilder()  // user 是别名
+      .createQueryBuilder() // user 是别名
       .orderBy('id', 'ASC')
       .skip((pageIndex - 1) * pageSize)
       .take(pageSize)
-      .getManyAndCount()
+      .getManyAndCount();
 
     return {
       total,
-      resource
-    }
+      resource,
+    };
   }
 
   async findOnyById(id: string): Promise<User> {

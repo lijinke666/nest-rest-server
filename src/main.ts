@@ -12,20 +12,25 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
 (async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {
-    cors: true,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(
+    ApplicationModule,
+    {
+      cors: true,
+    },
+  );
 
-  const RedisStore = connectRedis(expressSession)
+  const RedisStore = connectRedis(expressSession);
 
   // 全局参数验证
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    skipMissingProperties: false,
-    forbidUnknownValues: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      skipMissingProperties: false,
+      forbidUnknownValues: true,
+    }),
+  );
 
   // // 全局异常处理
   // app.useGlobalFilters(new HttpExceptionFilter());

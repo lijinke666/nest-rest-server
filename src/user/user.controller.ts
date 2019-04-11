@@ -19,7 +19,13 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiImplicitFile, ApiConsumes } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiUseTags,
+  ApiOperation,
+  ApiImplicitFile,
+  ApiConsumes,
+} from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
@@ -34,12 +40,14 @@ import { IPaginationResponse } from '../typing/base';
 // @UseGuards(RolesGuard,JwtAuthGuard)
 @Roles(ROLES.ADMIN)
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   @CacheKey('userList')
   @ApiOperation({ title: '获取用户列表' })
-  async findAll(@Query() params: PaginationDto = { pageIndex: 1, pageSize: 10 }): Promise<IPaginationResponse<User[]>> {
+  async findAll(
+    @Query() params: PaginationDto = { pageIndex: 1, pageSize: 10 },
+  ): Promise<IPaginationResponse<User[]>> {
     return await this.userService.findAll(params.pageIndex, params.pageSize);
   }
 

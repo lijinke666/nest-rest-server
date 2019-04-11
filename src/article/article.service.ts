@@ -10,21 +10,21 @@ export class ArticleService {
   constructor(
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
-  ) { }
+  ) {}
 
   async findAll(pageIndex, pageSize): Promise<IPaginationResponse<Article[]>> {
     const [resource, total] = await this.articleRepository
-    .createQueryBuilder('article')
-    .leftJoinAndSelect('article.user', 'user')
-    .orderBy('article.id', 'ASC')
-    .skip((pageIndex - 1) * pageSize)
-    .take(pageSize)
-    .getManyAndCount()
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.user', 'user')
+      .orderBy('article.id', 'ASC')
+      .skip((pageIndex - 1) * pageSize)
+      .take(pageSize)
+      .getManyAndCount();
 
     return {
       total,
-      resource
-    }
+      resource,
+    };
   }
 
   async createArticle(createArticleDto: CreateArticleDto) {

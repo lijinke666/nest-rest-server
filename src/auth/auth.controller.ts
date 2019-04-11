@@ -1,4 +1,10 @@
-import { Controller, Body, BadRequestException, Post, Req } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  BadRequestException,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiUseTags, ApiOperation } from '@nestjs/swagger';
 import { LoginUserCatDto } from '../user/dto/login-user.dto';
@@ -16,7 +22,7 @@ export class AuthController {
   @ApiOperation({ title: '登录' })
   async login(@Body() loginUserDto: LoginUserCatDto, @Req() req): Promise<any> {
     const user = await this.userService.findOne(loginUserDto);
-    req.session.userId = user.id
+    req.session.userId = user.id;
     if (!user) {
       throw new BadRequestException('用户名或密码错误!');
     }

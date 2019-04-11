@@ -1,4 +1,4 @@
 export interface IPaginationResponse<T = {}> {
-  resource: T,
-  total?: number
+  resource: T;
+  total?: number;
 }
