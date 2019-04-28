@@ -33,12 +33,14 @@ import { Roles } from '../roles/roles.decorator';
 import { RolesGuard } from '../roles/guards/roles.gurad';
 import { ROLES } from '../roles/constants/roles.constants';
 import { IPaginationResponse } from '../typing/base';
+import { TimeoutInterceptor } from 'src/common/interceptor/timeout.interceptor';
 
 @ApiBearerAuth()
 @ApiUseTags('用户管理')
 @Controller('user')
 // @UseGuards(RolesGuard,JwtAuthGuard)
 @Roles(ROLES.ADMIN)
+@UseInterceptors(new TimeoutInterceptor(10))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

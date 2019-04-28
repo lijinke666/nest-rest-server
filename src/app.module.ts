@@ -25,7 +25,7 @@ const CoreModules = [UserModule, ArticleModule, AuthModule];
         store: redisStore,
         ttl: (configService.get('REDIS_TTL') as unknown) as number,
         // docker link => redis
-        host: 'rd' || configService.get('REDIS_HOST'),
+        host: configService.get('REDIS_HOST'),
         port: configService.get('REDIS_PORT'),
       }),
       inject: [ConfigService],

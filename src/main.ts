@@ -7,6 +7,7 @@ import * as expressSession from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
+import * as timeout from 'connect-timeout'
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
@@ -43,9 +44,9 @@ import { join } from 'path';
       secret: 'nest',
       name: 'nest',
       store: new RedisStore({
-        // host: 'localhost',
+        host: 'localhost',
         // docker-compose 的 环境变量
-        host: 'rd',
+        // host: 'rd',
         port: 6379,
         ttl: 60,
         logErrors: true,
@@ -70,6 +71,16 @@ import { join } from 'path';
       max: 100, // 最大 100个 ip
     }),
   );
+
+  // app.use((req, res, next)=>{
+  //   if (!req.timedout) return next()
+  //   const statusCode = 300
+  //   res.status(statusCode).json({
+  //     statusCode,
+  //     timestamp: new Date().toISOString(),
+  //     path: req.url,
+  //   });
+  // })
 
   // Swagger
   registerSwagger(app)();

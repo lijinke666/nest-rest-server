@@ -32,6 +32,7 @@
     "class-transformer": "^0.2.0",
     "class-validator": "^0.9.1",
     "connect-redis": "^3.4.1",
+    "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.4",
     "csurf": "^1.9.0",
     "dotenv": "^7.0.0",
